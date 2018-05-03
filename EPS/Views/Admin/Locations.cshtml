@@ -1,0 +1,71 @@
+﻿@model IPagedList<EPS.Models.Location>
+@using PagedList;
+@using PagedList.Mvc;
+@using EPS.Models;
+@{
+    ViewBag.Title = "Locations";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var itemModel = new Location();
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-12">
+        <div class="padd-top well well-lg well-border">
+            <h4 class="pull-left">Locations</h4>
+            <ul class="list-inline pull-right">
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="action"><span class="glyphicon glyphicon-align-justify"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-right admin-menu-ul" id="action" aria-labelledby="sort">
+                        <li class="dropdown-header">Download As:</li>
+                        <li class="navbar-subs">@Html.ActionLink("PDF", "GetLocations", new { format = "pdf", treated = (bool?)ViewBag.Treated })</li>
+                        <li class="dropdown-header">Filter By:</li>
+                        <li class="navbar-subs">@Html.ActionLink("Treated", "Locations", new { treated = true })</li>
+                        <li class="navbar-subs">@Html.ActionLink("Untreated", "Locations", new { treated = false })</li>
+                    </ul>
+                </li>
+            </ul>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.LocationAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.IsTreated)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @item.LocationAddress.TruncateTo(50)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsTreated)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Mark as Treated", "LocationTreated", new { id = item.Id, treated = Request.QueryString["treated"], page = Request.QueryString["page"] }) |
+                            @Html.ActionLink("Details", "LocationDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "DeleteLocation", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Locations", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

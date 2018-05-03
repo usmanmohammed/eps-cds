@@ -1,0 +1,42 @@
+﻿@model IEnumerable<IGrouping<string, EPS.Models.CorpMember>>
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Corp Members";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row default-row">
+    <div class="col-md-12">
+        <h4>Corp Members</h4>
+    </div>
+</div>
+@foreach (var item in Model.OrderByDescending(r => r.Key))
+{
+    <div class="row clear-top-margin">
+        <div class="col-md-12">
+            <h5 class="post-title-posts post-details">@item.First().Batch.BatchName</h5>
+            <hr />
+        </div>
+        @foreach (var corper in item.OrderBy(g => g.StateCode))
+        {
+            <div class="col-sm-2 text-center">
+                <a class="fancy-image" href="data:@corper.ThumbnailContentType;base64,@System.Convert.ToBase64String(corper.Thumbnail)" rel="@item.Key">
+                    <img src="data:@corper.ThumbnailContentType;base64,@System.Convert.ToBase64String(corper.Thumbnail)" class="user-image" />
+                </a>
+                <div class="corper-template">
+                    <h5 class="user-name">@corper.FullName</h5>
+                    @*<p class="user-title">@corper.CorpMemberRole.Title</p>*@
+                    <p class="user-title">@corper.StateCode</p>
+                    <p class="user-discipline">@corper.Course.CourseName</p>
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryfancybox")
+    <script type="text/javascript" src="~/Scripts/helpers.js"></script>
+}

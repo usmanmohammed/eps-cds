@@ -1,0 +1,137 @@
+﻿@model EPS.Models.Location
+@using EPS.Models;
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="row default-row">
+    <div class="col-md-12">
+        <div class="well well-lg well-border welcome-div">
+            <h4>Welcome</h4>
+            <p>
+                This platform provides you with the opportunity to partner with us, the Wednesday Environmental Protection and Sanitation (EPS) Community Development Scheme (CDS) of the NYSC. This was created with the primary goal of acquiring/crowdsourcing places, sites and locations that need the attention of Waste Management Agencies and Authorities in Abuja. We also share information on our various sensitization/sanitation activities and general opportunities available for all.
+            </p>
+            <p>
+                Feel free to contact us through the Report Form below for places you feel the authorities should investigate. Thank you and welcome again.
+            </p>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="well well-lg well-border">
+            <h4>Latest Posts</h4>
+            <ul class="list-unstyled">
+                @foreach (var post in (IEnumerable<EPS.Models.Post>)ViewBag.Posts)
+            {
+                    <li>
+                        <a class="links" href="@Url.Action("Details","Posts", new { id=post.Id })">
+                            <div>
+                                <h5 class="post-title">
+                                    @post.Title
+                                </h5>
+                                <p>@System.Text.RegularExpressions.Regex.Replace(post.Content, "<[^>]*(>|$)", " ").TruncateTo(160)</p>
+                            </div>
+                            <div class="row post-footer">
+                                <div class="col-sm-8"><n class="text-success"> @post.Blog.BloggerName</n> &nbsp;-&nbsp; @post.DateCreated.ToLocalTime().ToString("dd MMMM, yyyy HH:mm")</div>
+                                <div class="col-sm-4 icons"><v class="post-glyphicons">331</v><i class="glyphicon glyphicon-heart post-glyphicons"></i><i class="glyphicon glyphicon-flag post-glyphicons"></i><i class="glyphicon glyphicon-share post-glyphicons"></i></div>
+                            </div>
+                            <hr class="post-delimeter" />
+                        </a>
+                    </li>
+                }
+            </ul>
+            <a class="btn btn-link btn-submit" href="@Url.Action("Index", "Posts")">See More</a>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="well well-lg well-border">
+            <h4>Report Form</h4>
+            <p>Please provide the neccessary information so that we can talk to the repective authorities and get back to you.</p>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <v class="control-label col-md-1 glyphicon glyphicon-user text-success"></v>
+                        <div class="col-md-11 contact-form-fields">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Your Name", @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <v class="control-label col-md-1 glyphicon glyphicon-map-marker text-danger"></v>
+                        <div class="col-md-11 contact-form-fields">
+                            @Html.EditorFor(model => model.LocationAddress, new { htmlAttributes = new { placeholder = "The Address You Wish to Report", @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LocationAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <v class="control-label col-md-1 glyphicon glyphicon-phone text-primary"></v>
+                        <div class="col-md-11 contact-form-fields">
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { placeholder = "Your Phone Number", @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <v class="control-label col-md-1 glyphicon glyphicon-info-sign text-info"></v>
+                        <div class="col-md-11 contact-form-fields">
+                            @Html.EditorFor(model => model.AdditionalInformation, new { htmlAttributes = new { placeholder = "Additional Information", @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AdditionalInformation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <v class="control-label col-md-1"></v>
+                        <div class="col-md-12 contact-form-fields">
+                            <p>You can also provide us with an image of the location to back your report. Supported file formats include .png, .jpg Max file size 500KB </p>
+                            <p class="no-margin">Image Upload <strong>(Optional)</strong></p>
+                            <input class="form-control" id="Thumbnail" accept=".png, .jpg, .jpeg" name="images" title="Upload an Image" type="file" />
+                            @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group clear-bottom">
+                        <div class="col-md-12">
+                            <input type="submit" value="Submit" class="btn btn-link btn-lg btn-submit" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        <div class="well well-lg well-border" id="birthday">
+            <h4>Birthdays</h4>
+            @if (((IEnumerable<EPS.Models.CorpMember>)ViewBag.Birthdays).Count() > 0)
+            {
+                <p>Help us celebrate these amazing corp members this month</p>
+                <ul class="list-unstyled row clear-top-margin">
+                    @foreach (var corper in (IEnumerable<EPS.Models.CorpMember>)ViewBag.Birthdays)
+                    {
+                        <li class="col-sm-4" style="margin-top: 10px;">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object comment-avatar" src="data:@corper.ThumbnailContentType;base64,@System.Convert.ToBase64String(corper.Thumbnail)" alt="username">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <p class="media-heading">@corper.FullName</p>
+                                <p class="media-date">@corper.DateOfBirth.ToString("dd MMMM")</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No corp member is celebrating his/her birthday this month. Maybe next?</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

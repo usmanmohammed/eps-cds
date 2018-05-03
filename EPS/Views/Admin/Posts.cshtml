@@ -1,0 +1,50 @@
+﻿@model IPagedList<EPS.Models.Post>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Posts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var itemModel = new EPS.Models.Post();
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-12">
+        <div class="padd-top well well-lg well-border">
+            <h4>Blog Posts</h4>
+            <p>
+                @Html.ActionLink("Create New", "CreatePost")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.DateCreated)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditPost", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "PostDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "DeletePost", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Posts", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

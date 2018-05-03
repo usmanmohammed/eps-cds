@@ -1,0 +1,21 @@
+﻿@model IEnumerable<EPS.Models.Comment>
+
+<ul id="media-list" class="media-list">
+    @foreach (var comment in Model)
+    {
+        <li class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object comment-avatar" src="~/Content/Images/user.png" alt="username">
+                </a>
+            </div>
+            <div class="media-body">
+                <p class="media-heading">@comment.Name</p>
+                <p class="media-date">@comment.DateCreated.ToString("dd MMMM, yyyy HH:mm")</p>
+            </div>
+            <div class="sdsd">
+                <p>@comment.Content</p>
+            </div>
+        </li>
+    }
+</ul>

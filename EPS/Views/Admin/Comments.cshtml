@@ -1,0 +1,50 @@
+﻿@model IPagedList<EPS.Models.Comment>
+@using EPS.Models;
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Comments";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var itemModel = new EPS.Models.Comment();
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-12">
+        <div class="padd-top well well-lg well-border">
+            <h4>Comments</h4>
+            <p>
+                @Html.ActionLink("Create New", "CreateComment")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.DateCreated)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @System.Text.RegularExpressions.Regex.Replace(item.Content, "<[^>]*(>|$)", " ").TruncateTo(100)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditComment", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "CommentDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "DeleteComment", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Comments", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model EPS.Models.Comment
+<script type="text/javascript">
+
+    function resetForm() {
+        document.getElementById('reset').click();
+    };
+</script>
+@using (Ajax.BeginForm("AddComment", "Posts", new AjaxOptions() { UpdateTargetId = "comments", HttpMethod = "POST", OnSuccess = "resetForm" }))
+{
+    @Html.AntiForgeryToken()
+    <h5>Join the discussion</h5>
+    <div class="row" id="form">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.PostId)
+        <div class="col-sm-6">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Name", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-6">
+            @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { placeholder = "Email Address", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-12">
+            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { placeholder = "Comment", rows = 5, @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12">
+            <br />
+            <input type="submit" value="Submit" class="btn btn-link btn-submit" />
+            <input id="reset" type="reset" value="Submit" style="display:none" class="btn btn-link btn-submit" />
+        </div>
+    </div>
+}

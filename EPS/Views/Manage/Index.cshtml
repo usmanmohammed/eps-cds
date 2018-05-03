@@ -1,0 +1,16 @@
+﻿@model EPS.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="row default-row">
+    <div class="col-md-6">
+        <div class="well well-lg well-border">
+            <h4>@ViewBag.Title.</h4>
+            <p class="text-success">@ViewBag.StatusMessage</p>
+            <div>
+                @Html.ActionLink("Change your password", "ChangePassword")
+            </div>
+        </div>
+    </div>
+</div>

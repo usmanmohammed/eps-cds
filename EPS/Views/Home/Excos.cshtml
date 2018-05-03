@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EPS.Models.CorpMember>
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Executive Officers";
+    var cdsManager = ((IEnumerable<EPS.Models.CorpMember>)Model).SingleOrDefault(r => r.CorpMemberRole.Title == "CDS Manager");
+}
+<div class="row default-row">
+    <div class="col-md-12">
+        <div class="exco-well">
+            <h4>Executive Officers</h4>
+        </div>
+    </div>
+    @if (cdsManager != null)
+    {
+        <div class="col-sm-2 text-center">
+            <a class="fancy-image " href="data:@cdsManager.ThumbnailContentType;base64,@System.Convert.ToBase64String(cdsManager.Thumbnail)">
+                <img src="data:@cdsManager.ThumbnailContentType;base64,@System.Convert.ToBase64String(cdsManager.Thumbnail)" class="user-image cds-avatar" />
+            </a>
+            <h5 class="user-name">@cdsManager.FullName</h5>
+            <p class="user-title cds-title">CDS Manager</p>
+            <p class="user-discipline"></p>
+        </div>
+    }
+    @foreach (var item in Model.Where(r => r.CorpMemberRole.Title != "CDS Manager"))
+    {
+        <div class="col-sm-2 text-center">
+            <a class="fancy-image" href="data:@item.ThumbnailContentType;base64,@System.Convert.ToBase64String(item.Thumbnail)">
+                <img src="data:@item.ThumbnailContentType;base64,@System.Convert.ToBase64String(item.Thumbnail)" class="user-image" />
+            </a>
+            <div class="corper-template">
+                <h5 class="user-name">@item.FullName</h5>
+                <p class="user-title">@item.CorpMemberRole.Title</p>
+                <p class="user-discipline">@item.Course.CourseName</p>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryfancybox")
+    <script type="text/javascript" src="~/Scripts/helpers.js"></script>
+}

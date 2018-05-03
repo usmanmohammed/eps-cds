@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EPS.Models.CorpMemberRole>
+
+@{
+    ViewBag.Title = "CorpMemberRoles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-12">
+        <div class="padd-top well well-lg well-border">
+            <h4>Corp Member Roles</h4>
+            <p>
+                @Html.ActionLink("Create New", "CreateCorpMemberRole")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateCreated)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditCorpMemberRole", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "CorpMemberRoleDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "DeleteCorpMemberRole", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

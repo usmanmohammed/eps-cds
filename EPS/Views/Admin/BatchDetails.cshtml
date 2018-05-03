@@ -1,0 +1,47 @@
+﻿@model EPS.Models.Batch
+
+@{
+    ViewBag.Title = "BatchDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-6 padd-top">
+        <div class="well well-lg well-border">
+            <h4>Batch Details</h4>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.BatchName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BatchName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BatchCode)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BatchCode)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Year)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Year)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DateCreated)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DateCreated)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+</div>

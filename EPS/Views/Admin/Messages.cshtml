@@ -1,0 +1,72 @@
+﻿@model IPagedList<EPS.Models.Message>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Messages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var itemModel = new EPS.Models.Message();
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-12">
+        <div class="padd-top well well-lg well-border">
+            <h4>Messages</h4>
+            <p>
+                @Html.ActionLink("Create New", "CreateMessage")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.EmailAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.IsTreated)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.DateCreated)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmailAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsTreated)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "MessageDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "DeleteMessage", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Messages", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

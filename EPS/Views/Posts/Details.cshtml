@@ -1,0 +1,72 @@
+﻿@model EPS.Models.Post
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="row default-row">
+    <div id="posts" class="col-lg-9">
+        <div class="well-border well-post-details">
+            @if (Model.Thumbnail != null)
+            {
+                <img class="post-image" src="data:@Model.ThumbnailContentType;base64,@System.Convert.ToBase64String(Model.Thumbnail)" />
+            }
+            <div class="post-details-titles">
+                <div>
+                    <h5 class="post-title-posts post-details">@Model.Title</h5>
+                </div>
+                <div class="row post-footer">
+                    <div class="col-sm-8"><n class="text-success"> @Model.Blog.BloggerName</n> &nbsp;-&nbsp; @Model.DateCreated.ToString("dd MMMM, yyyy HH:mm")</div>
+                    <div class="col-sm-4 icons"><v class="post-glyphicons">331</v><i class="glyphicon glyphicon-heart post-glyphicons"></i><i class="glyphicon glyphicon-flag post-glyphicons"></i><i class="glyphicon glyphicon-share post-glyphicons"></i></div>
+                </div>
+
+                <div id="post-content" class="post-content">
+                    @Html.Raw(Model.Content.Replace(Environment.NewLine, "<br />"))
+                </div>
+
+                @if (Model.PostImages.Count > 0)
+                {
+                    <div class="post-images">
+                        <h5 class="post-title-posts post-details">Additional Images</h5>
+                        <ul class="list-inline list-unstyled">
+                            @foreach (var image in Model.PostImages)
+                            {
+                                <li class="li-post-image">
+                                    <a id="fancy-load" class="fancy-image" rel="group" href="data:@image.ContentType;base64,@System.Convert.ToBase64String(image.Content)" data-rel="fancybox-button">
+                                        <img class="post-image-sm" src="data:@image.ContentType;base64,@System.Convert.ToBase64String(image.Content)" alt="username">
+                                    </a>
+                                </li>
+                            }
+                            @*<li class="li-post-image">
+                                <a href="#">
+                                    <img class="post-image-sm" src="data:@Model.ThumbnailContentType;base64,@System.Convert.ToBase64String(Model.Thumbnail)" alt="username">
+                                </a>
+                            </li>*@
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+        <br />
+        <div class="well well-lg well-border grey">
+            <h4>Comments</h4>
+            <div id="comments">
+                @{
+                    Html.RenderPartial("_CommentLiPartial", Model.Comments);
+                }
+            </div>
+            @Html.Partial("_AddCommentPartial", new EPS.Models.Comment() { PostId = Model.Id })
+        </div>
+    </div>
+    <div id="sidebar" class="col-lg-3">
+        @Html.Partial("_CategoriesSidebar", (IEnumerable<EPS.Models.Blog>)ViewBag.Blogs)
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/jqueryfancybox")
+    <script type="text/javascript" src="~/Scripts/helpers.js"></script>
+}

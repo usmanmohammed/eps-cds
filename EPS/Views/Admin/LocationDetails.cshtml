@@ -1,0 +1,74 @@
+﻿@model EPS.Models.Location
+
+@{
+    ViewBag.Title = "LocationDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-6 padd-top">
+        <div class="well well-lg well-border">
+            <h4>Location Details</h4>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LocationAddress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LocationAddress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Thumbnail)
+                </dt>
+
+                <dd>
+                    @if (Model.Thumbnail != null)
+                    {
+                        <img class="test-image" src="data:@Model.ThumbnailContentType;base64,@System.Convert.ToBase64String(Model.Thumbnail)" />
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AdditionalInformation)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AdditionalInformation)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsApproved)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsApproved)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsTreated)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsTreated)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+</div>

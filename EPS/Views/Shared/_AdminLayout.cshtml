@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Wednesday EPS CDS Zoological Garden Area 1</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="body-admin">
+    <div class="row sidebar" style="margin-top: unset">
+        <div class="col-sm-3 col-md-2 admin-bar">
+            <div class="admin-title">
+                <h4 class="h5-site h5-other-titles main-title"><a href="@Url.Action("Index", "Admin")" class="a-admin">Dashboard</a></h4><h4 class="h5-site h5-other-titles main-title"><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home glyph-home"></span></a></h4>
+            </div>
+            <ul class="nav nav-sidebar">
+                <li><a class="a-admin" href="@Url.Action("Locations", "Admin")">Locations<span class="glyphicon glyphicon-user" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("CorpMembers", "Admin")">Corp Members<span class="glyphicon glyphicon-user" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("Batches", "Admin")">Service Year<span class="glyphicon glyphicon-gift" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("Blogs", "Admin")">Blogs<span class="glyphicon glyphicon-cog" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("Posts", "Admin")">Posts<span class="glyphicon glyphicon-th-large" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("Courses", "Admin")">Courses<span class="glyphicon glyphicon-th-large" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("CorpMemberRoles", "Admin")">Roles<span class="glyphicon glyphicon-th-large" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("Comments", "Admin")">Comments<span class="glyphicon glyphicon-th-large" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("Messages", "Admin")">Messages<span class="glyphicon glyphicon-th-large" style="float: right; margin-top: 3px;"></span></a></li>
+                <li><a class="a-admin" href="@Url.Action("Replies", "Admin")">Replies<span class="glyphicon glyphicon-th-large" style="float: right; margin-top: 3px;"></span></a></li>
+            </ul>
+        </div>
+        <div class="container-fluid admin">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

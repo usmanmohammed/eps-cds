@@ -1,0 +1,86 @@
+﻿@model EPS.Models.Post
+<link href="~/Content/jHtmlArea/jHtmlArea.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "EditPost";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-12 padd-top">
+        @using (Html.BeginForm("EditPost", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal well well-lg well-border">
+                <h4>Edit Blog Post</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BlogId, "Blog", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("BlogId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BlogId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Content, new { htmlAttributes = new { rows = 30, @class = "form-control content" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Image Upload", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-offset-2 col-md-9">
+                        <ul class="list-inline list-unstyled">
+                            @foreach (var image in Model.PostImages)
+                            {
+
+                                <li class="li-post-image">
+                                    <a id="fancy-load" class="fancy-image" rel="group" href="data:@image.ContentType;base64,@System.Convert.ToBase64String(image.Content)" data-rel="fancybox-button">
+                                        <img class="post-image-sm" src="data:@image.ContentType;base64,@System.Convert.ToBase64String(image.Content)" alt="username">
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-md-offset-2 col-md-9">
+                        <input class="form-control" id="Thumbnail" multiple accept=".png, .jpg, .jpeg" name="images" title="Upload an Image" type="file" />
+                        @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="submit" value="Save" class="btn btn-link btn-submit" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryfancybox")
+    @Scripts.Render("~/bundles/jhtmlarea")
+    <script type="text/javascript" src="~/Scripts/helpers.js"></script>
+}
+

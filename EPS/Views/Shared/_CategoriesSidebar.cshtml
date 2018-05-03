@@ -1,0 +1,11 @@
+﻿@model IEnumerable<EPS.Models.Blog>
+
+<div class="well well-border">
+    <h4>Categories</h4>
+    <ul class="list-unstyled">
+        @foreach (var item in Model)
+        {
+            <li><a class="categories-title" href="@Url.Action("Details", "Blogs", new { id = item.Id })">@item.Title</a></li>
+        }
+    </ul>
+</div>

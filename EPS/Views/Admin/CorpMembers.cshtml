@@ -1,0 +1,68 @@
+﻿@model IPagedList<EPS.Models.CorpMember>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "CorpMembers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var itemModel = new EPS.Models.CorpMember();
+}
+}
+<div class="col-sm-9 col-md-10 admin-main">
+    <div class="col-md-12">
+        <div class="padd-top well well-lg well-border">
+            <h4>Corp Members</h4>
+            <p>
+                @Html.ActionLink("Create New", "CreateCorpMember")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.Batch.BatchName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.CorpMemberRole.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.StateCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => itemModel.IsExco)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Batch.BatchName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CorpMemberRole.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StateCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsExco)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditCorpMember", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "CorpMemberDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "DeleteCorpMember", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("CorpMembers", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

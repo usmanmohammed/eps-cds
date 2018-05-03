@@ -1,0 +1,51 @@
+﻿@model IPagedList<EPS.Models.Post>
+@using EPS.Models;
+@using EPS.Models;
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row default-row">
+    <div class="col-lg-9">
+        <div class="well well-lg well-border">
+            @if (Model.Count() > 0)
+            {
+                <h4>Search results for "@ViewBag.query"</h4>
+                <ul class="list-unstyled">
+                    @foreach (var post in Model)
+                {
+                        <li>
+                            <a class="links" href="@Url.Action("Details", "Posts", new { id = post.Id })">
+                                <div>
+                                    <h5 class="post-title">
+                                        @post.Title
+                                    </h5>
+                                    <p>@System.Text.RegularExpressions.Regex.Replace(post.Content, "<[^>]*(>|$)", " ").TruncateTo(200)</p>
+                                </div>
+                                <div class="row post-footer">
+                                    <div class="col-sm-8"><n class="text-success"> @post.Blog.BloggerName</n> &nbsp;-&nbsp; @post.DateCreated.ToLocalTime().ToString("dd MMMM, yyyy HH:mm")</div>
+                                    <div class="col-sm-4 icons"><v class="post-glyphicons">331</v><i class="glyphicon glyphicon-heart post-glyphicons"></i><i class="glyphicon glyphicon-flag post-glyphicons"></i><i class="glyphicon glyphicon-share post-glyphicons"></i></div>
+                                </div>
+                                <hr class="post-delimeter" />
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <div class="pagination">
+                    @Html.PagedListPager(Model, page => Url.Action("Search", new { page, ViewBag.query }))
+                </div>
+            }
+            else
+            {
+                <h4>No results for "@ViewBag.QueryString". </h4>
+            }
+        </div>
+    </div>
+
+    <div id="sidebar" class="col-lg-3">
+        @Html.Partial("_CategoriesSidebar", (IEnumerable<EPS.Models.Blog>)ViewBag.Blogs)
+    </div>
+</div>

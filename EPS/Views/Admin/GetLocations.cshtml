@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EPS.Models.Location>
+
+@{
+    ViewBag.Title = "GetLocations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 1;
+}
+
+<div class="row default-row print-preview">
+    @foreach (var item in Model)
+    {
+            <p><strong>S/N:</strong> @(count++)</p>
+            <p><strong>Report ID:</strong> EPS-@item.Id.ToString("D6")</p>
+            <p><strong>Date Reported:</strong> @item.DateCreated.ToString("dd MMMM, yyyy HH:mm")</p>
+            <p><strong>Name of Reporter:</strong> @item.Name</p>
+            <p><strong>Phone Number:</strong> @item.PhoneNumber</p>
+            <p><strong>Address in View:</strong> @item.LocationAddress</p>
+            <p><strong>Additional Information:</strong> @item.AdditionalInformation</p>
+            if (item.LocationImages.Count() > 0)
+            {
+                <p><strong>Pictures Provided</strong></p>
+                foreach (var image in item.LocationImages)
+                {
+                    <ul class="list-unstyled list-inline">
+                        <li><img height="200" src="data:@image.ContentType;base64,@System.Convert.ToBase64String(image.Content)" /></li>
+                    </ul>
+                }
+            }
+            <hr />
+    }
+</div>
